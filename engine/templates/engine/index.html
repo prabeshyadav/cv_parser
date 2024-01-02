@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Index Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <style>
+        body{margin-bottom:150px;}
+        h1{color:#337ab7;}
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1><center><strong>C.V. Engine</strong></center></h1>
+        <hr/>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    {{message}}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Upload CV</h3>
+            </div>
+            <div class="panel-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="exampleInputFile">Select CV</label>
+                        <input type="file" id="cvFile" name="file">
+                        <p class="help-block">Please select only valid file format (docx, pdf).</p>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Score</button>
+                </form>
+            </div>
+        </div>
+        <div>&nbsp;</div><hr><div>&nbsp;</div>
+        {% if parsed_data %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <span>Parsed Result (JSON)</span>
+                    <!-- <span class="pull-right">
+                        <button class="btn btn-sm btn-default">
+                            copy
+                        </button>
+                    </span> -->
+                </h3>
+            </div>
+            <div class="panel-body">
+                {% for key, val in parsed_data.items %}
+                    <p><strong>{{ key }}:</strong></p>
+                    <p>{{ val }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+    </div>
+</body>
+
+</html>
